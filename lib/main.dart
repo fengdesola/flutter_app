@@ -6,10 +6,12 @@ import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/core/CoreConstant.dart';
 
+import 'core/http/http.dart';
 import 'modules/account/LoginPage.dart';
 
 void main() {
   CoreConstant.init(true, "https://www.wanandroid.com/");
+  HttpDio.init();
   runApp(MyApp());
 }
 

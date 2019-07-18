@@ -42,7 +42,10 @@ class HttpUtils {
 
     //做非空判断
     if (params != null && params.isNotEmpty) {
-      StringBuffer sb = new StringBuffer("?");
+      StringBuffer sb = new StringBuffer();
+      if (!url.contains("?")) {
+        sb.write("?");
+      }
       params.forEach((key, value) {
         sb.write("$key" + "=" + "$value" + "&");
       });
