@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import 'package:flutter_app/core/CoreConstant.dart';
+import 'package:flutter_app/core/base/CoreVo.dart';
 
 import 'HttpRequest.dart';
 
@@ -32,7 +33,7 @@ class HttpUtils {
   static const String POST = "post";
 
   //get请求
-  static void get(String url, Function callback,
+  static void get<T extends CoreVo>(String url, Function callback,
       {Map<String, String> params,
       Map<String, String> headers,
       Function errorCallback}) async {
@@ -53,19 +54,19 @@ class HttpUtils {
       paramStr = paramStr.substring(0, paramStr.length - 1);
       url += paramStr;
     }
-    await HttpRequest.startRequest(url, callback,
+    await HttpRequest.startRequest<T>(url, callback,
         method: GET, headers: headers, errorCallback: errorCallback);
   }
 
   //post请求
-  static void post(String url, Function callback,
+  static void post<T extends CoreVo>(String url, Function callback,
       {Map<String, String> params,
       Map<String, String> headers,
       Function errorCallback}) async {
     if (!url.startsWith("http")) {
       url = CoreConstant.baseUrl + url;
     }
-    await HttpRequest.startRequest(url, callback,
+    await HttpRequest.startRequest<T>(url, callback,
         method: POST,
         headers: headers,
         params: params,

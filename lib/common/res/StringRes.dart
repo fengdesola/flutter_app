@@ -6,5 +6,5 @@ class StringRes {
 
   static String home = "home";
 
-  static String author = " author:";
+  static String author = " 作者: ";
 }

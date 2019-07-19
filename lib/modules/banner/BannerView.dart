@@ -48,17 +48,17 @@ class BannerViewState extends CoreState<BannerView> {
 
   void _getBanner() {
     showLoadingView();
-    HttpUtils.post(HttpApi.BANNER, (HttpResult httpResult) {
+    HttpUtils.post<BannerEntity>(HttpApi.BANNER, (HttpResult httpResult) {
       if (httpResult.isSuccess() && httpResult.isNotEmpty()) {
-        List list = httpResult.data;
-        List bannerList = List<BannerEntity>();
-        if (list != null) {
-          list.forEach((item) {
-            bannerList.add(BannerEntity.fromJson(item));
-          });
-        }
+        List bannerList = httpResult.data;
+//        List bannerList = List<BannerEntity>();
+//        if (list != null) {
+//          list.forEach((item) {
+//            bannerList.add(BannerEntity.fromJson(item));
+//          });
+//        }
         setState(() {
-          bannerData = bannerList;
+          bannerData = bannerList.cast<BannerEntity>();
         });
         restoreView();
       }

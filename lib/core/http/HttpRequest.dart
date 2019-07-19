@@ -9,6 +9,7 @@ import 'package:flutter_app/core/utils/LogUtils.dart';
 import 'package:flutter_app/core/utils/ToastUtil.dart';
 import 'package:http/http.dart' as http;
 
+import 'Parser.dart' as parser;
 import 'http.dart' as httpDio;
 
 class HttpRequest {
@@ -124,8 +125,9 @@ class HttpRequest {
 
       Map<String, dynamic> map = res.data;
 
+      var resultData = await parser.parse<T>(map['data']);
       HttpResult result =
-          HttpResult(map['errorCode'], map['errorMsg'], map['data']);
+          HttpResult(map['errorCode'], map['errorMsg'], resultData);
 
       if (callback != null) {
         if (result.isSuccess()) {

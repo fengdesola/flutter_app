@@ -197,11 +197,12 @@ class LoginPageBodyState extends State<LoginPageBody> {
 
   void _loginOnPressed() {
     if (_validate()) {
-      HttpUtils.post(
+      HttpUtils.post<LoginUserVo>(
           "user/login",
           (HttpResult httpResult) {
             if (httpResult.isSuccess() && httpResult.isNotEmpty()) {
-              LoginUserVo loginUserVo = LoginUserVo.fromJson(httpResult.data);
+//              LoginUserVo loginUserVo = LoginUserVo.fromJson(httpResult.data);
+              LoginUserVo loginUserVo = httpResult.data;
 
               AccountData.saveLoginInfo(loginUserVo.username).then((r) {
                 Navigator.of(context)
