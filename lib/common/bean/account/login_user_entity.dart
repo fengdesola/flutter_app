@@ -1,6 +1,6 @@
 import 'package:flutter_app/core/base/CoreVo.dart';
 
-class LoginUserVo extends CoreVo {
+class LoginUserEntity extends CoreVo {
   bool admin;
   String email;
   String icon;
@@ -12,7 +12,7 @@ class LoginUserVo extends CoreVo {
   String username;
   int test;
 
-  LoginUserVo(
+  LoginUserEntity(
       {this.admin,
       this.email,
       this.icon,
@@ -23,7 +23,7 @@ class LoginUserVo extends CoreVo {
       this.type,
       this.username});
 
-  LoginUserVo.fromJson(Map<String, dynamic> json) {
+  LoginUserEntity.fromJson(Map<String, dynamic> json) {
     admin = json['admin'];
     email = json['email'];
     icon = json['icon'];

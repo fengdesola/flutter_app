@@ -4,7 +4,7 @@ import 'package:flutter_app/common/bean/article/article_vo_entity.dart';
 import 'package:flutter_app/core/base/state/CoreListState.dart';
 import 'package:flutter_app/core/http/HttpResult.dart';
 import 'package:flutter_app/core/http/HttpUtils.dart';
-import 'package:flutter_app/core/http/Parser.dart' as parser;
+import 'package:flutter_app/core/http/Parser.dart';
 import 'package:flutter_app/modules/article/ArticleItemView.dart';
 import 'package:flutter_app/modules/banner/BannerView.dart';
 
@@ -56,7 +56,7 @@ class HomePageState extends CoreListState<HomePage> {
 //            .parser<ArticleVoEntity>(httpResult.data['datas']);
 //        List<ArticleVoEntity> tempList =
 //            await parser.parse<ArticleVoEntity>(httpResult.data['datas']);
-        parser.parse<ArticleVoEntity>(httpResult.data['datas']).then((value) {
+        parse<ArticleVoEntity>(httpResult.data['datas']).then((value) {
           setSuitableData(value);
           showSuitableView();
         });

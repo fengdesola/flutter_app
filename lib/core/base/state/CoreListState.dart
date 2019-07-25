@@ -7,7 +7,7 @@ abstract class CoreListState<T extends StatefulWidget> extends CoreState<T> {
   static const int FIRST_PAGE = 0;
   int pageNo = FIRST_PAGE;
   int pageSize = 20;
-  List listData = List(); //列表数据,不包含头部数量，也不包含最后一个loadmore
+  List _listData = List(); //列表数据,不包含头部数量，也不包含最后一个loadmore
   ScrollController scrollController = new ScrollController();
 
   bool _isLoading = false; //判断是否正在加载中，防止多次网络请求
@@ -18,11 +18,11 @@ abstract class CoreListState<T extends StatefulWidget> extends CoreState<T> {
     _isLoading = value;
   }
 
-  bool hasHeader = false; //是否有头部，有且只有一个widget
+  bool _hasHeader = false; //是否有头部，有且只有一个widget
 
-  bool refreshEnable = false; //是否允许下拉刷新
-  bool loadMoreEnable = false; //是否允许加载更多
-  bool hasMoreData = false; //是否存在更多数据，只有在[loadMoreEnable]=true时才有效
+  bool _refreshEnable = false; //是否允许下拉刷新
+  bool _loadMoreEnable = false; //是否允许加载更多
+  bool _hasMoreData = false; //是否存在更多数据，只有在[loadMoreEnable]=true时才有效
 
   @override
   void initState() {
@@ -32,9 +32,9 @@ abstract class CoreListState<T extends StatefulWidget> extends CoreState<T> {
   }
 
   _initDefault() {
-    this.refreshEnable = initRefreshEnable();
-    this.loadMoreEnable = initLoadMoreEnable();
-    this.hasHeader = initHasHeader();
+    this._refreshEnable = initRefreshEnable();
+    this._loadMoreEnable = initLoadMoreEnable();
+    this._hasHeader = initHasHeader();
   }
 
   @override
@@ -55,13 +55,13 @@ abstract class CoreListState<T extends StatefulWidget> extends CoreState<T> {
 
   void setRefreshEnable(bool enable) {
     setState(() {
-      refreshEnable = enable;
+      _refreshEnable = enable;
     });
   }
 
   void setLoadMoreEnable(bool enable) {
     setState(() {
-      loadMoreEnable = enable;
+      _loadMoreEnable = enable;
     });
   }
 
@@ -78,16 +78,16 @@ abstract class CoreListState<T extends StatefulWidget> extends CoreState<T> {
     setState(() {
       List listTemp = new List();
 
-      if (isMore && listData != null && listData.isNotEmpty) {
-        listTemp.addAll(listData);
+      if (isMore && _listData != null && _listData.isNotEmpty) {
+        listTemp.addAll(_listData);
       }
       if (list != null && list.isNotEmpty) {
         listTemp.addAll(list);
       }
-      listData = listTemp;
+      _listData = listTemp;
 
-      if (loadMoreEnable) {
-        hasMoreData = (list != null && list.length == pageSize) ? true : false;
+      if (_loadMoreEnable) {
+        _hasMoreData = (list != null && list.length == pageSize) ? true : false;
       }
     });
   }
@@ -100,7 +100,10 @@ abstract class CoreListState<T extends StatefulWidget> extends CoreState<T> {
       double maxScroll = position.maxScrollExtent;
       double pixels = position.pixels;
 //      print("maxScroll=${maxScroll},pixels=${pixels},hasMoreData=$hasMoreData");
-      if (maxScroll == pixels && loadMoreEnable && hasMoreData && !_isLoading) {
+      if (maxScroll == pixels &&
+          _loadMoreEnable &&
+          _hasMoreData &&
+          !_isLoading) {
         //加载更多
         pageNo++;
         onRefresh();
@@ -117,10 +120,10 @@ abstract class CoreListState<T extends StatefulWidget> extends CoreState<T> {
         return _buildListItem(index);
       },
       itemCount:
-          listData.length + (hasHeader ? 1 : 0) + (loadMoreEnable ? 1 : 0),
+          _listData.length + (_hasHeader ? 1 : 0) + (_loadMoreEnable ? 1 : 0),
       controller: scrollController,
     );
-    if (refreshEnable) {
+    if (_refreshEnable) {
       return RefreshIndicator(
         child: listView,
         onRefresh: _onRefresh,
@@ -141,21 +144,21 @@ abstract class CoreListState<T extends StatefulWidget> extends CoreState<T> {
   }
 
   Widget _buildListItem(int index) {
-    if (hasHeader && index == 0) {
+    if (_hasHeader && index == 0) {
       return buildHeaderWidget();
-    } else if (hasHeader) {
+    } else if (_hasHeader) {
       //去掉头部占用的位置
       index--;
     }
 //    print("index===========$index====${index >= listData.length}");
 
-    if (loadMoreEnable && index == listData.length) {
+    if (_loadMoreEnable && index == _listData.length) {
       //load more
-      return hasMoreData
+      return _hasMoreData
           ? LoadMore.LoadMoreIngView()
           : LoadMore.LoadMoreEndView();
     } else {
-      var itemData = listData[index];
+      var itemData = _listData[index];
 
       //item
       return buildListItem(itemData, index);
@@ -185,7 +188,7 @@ abstract class CoreListState<T extends StatefulWidget> extends CoreState<T> {
   }
 
   @override
-  bool isEmpty() => listData == null || listData.isEmpty;
+  bool isEmpty() => _listData == null || _listData.isEmpty;
 
   @override
   showEmptyView() {
@@ -229,7 +232,7 @@ abstract class CoreListState<T extends StatefulWidget> extends CoreState<T> {
     return false;
   }
 
-  ///如果存在头部[hasHeader]= true,则重写这个方法返回头部
+  ///如果存在头部[_hasHeader]= true,则重写这个方法返回头部
   Widget buildHeaderWidget() {
     return SizedBox(
       width: 0,

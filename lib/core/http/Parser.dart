@@ -6,13 +6,13 @@ _parseObj(Param param) {
   if (param.clazz == "CoreVo") {
     return param.data;
   }
-  return EntityFactory.generateObj(param.data, param.clazz);
+  return EntityFactoryParse.generateObj(param.data, param.clazz);
 }
 
 _parseArray(Param param) {
   final parsed = param.data.cast<Map<String, dynamic>>();
   return parsed
-      .map((json) => EntityFactory.generateObj(json, param.clazz))
+      .map((json) => EntityFactoryParse.generateObj(json, param.clazz))
       .toList();
 }
 

@@ -16,15 +16,15 @@ abstract class CoreState<T extends StatefulWidget> extends State<T> {
 
   @override
   Widget build(BuildContext context) {
-    Widget widget;
+    Widget _widget;
     switch (status) {
       case Status.empty:
-        widget = Center(
+        _widget = Center(
           child: Text("no data"),
         );
         break;
       case Status.error:
-        widget = Center(
+        _widget = Center(
           child: InkWell(
             child: Text(
               "error",
@@ -34,16 +34,16 @@ abstract class CoreState<T extends StatefulWidget> extends State<T> {
         );
         break;
       case Status.loading:
-        widget = Center(
+        _widget = Center(
           child: CircularProgressIndicator(),
         );
         break;
       case Status.restore:
-        widget = null;
+        _widget = null;
         break;
     }
 
-    return widget;
+    return _widget;
   }
 
   showEmptyView() {

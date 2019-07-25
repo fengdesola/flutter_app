@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/common/bean/account/LoginUserVo.dart';
+import 'package:flutter_app/common/bean/account/login_user_entity.dart';
 import 'package:flutter_app/common/cache/AccountData.dart';
 import 'package:flutter_app/common/res/GapRes.dart';
 import 'package:flutter_app/common/res/StringRes.dart';
@@ -28,7 +28,6 @@ class LoginPageBody extends StatefulWidget {
 }
 
 class LoginPageBodyState extends State<LoginPageBody> {
-  bool userClearVisible = false;
   bool pwdShow = true;
   TextEditingController userController = TextEditingController();
   TextEditingController pwdController = TextEditingController();
@@ -111,13 +110,14 @@ class LoginPageBodyState extends State<LoginPageBody> {
           controller: userController,
           keyboardType: TextInputType.number,
           style: TextStyle(color: Colors.blue),
-          onChanged: _userOnChange,
+//          onChanged: _userOnChange,
           decoration: InputDecoration(
             border: OutlineInputBorder(),
             contentPadding: EdgeInsets.all(10.0),
             icon: Icon(Icons.phone),
             suffixIcon: Offstage(
-              offstage: !userClearVisible,
+              offstage:
+                  userController.text == null || userController.text.isEmpty,
               child: IconButton(
                 icon: Icon(
                   Icons.clear,
@@ -130,7 +130,7 @@ class LoginPageBodyState extends State<LoginPageBody> {
             hintText: StringRes.login_page_user_name_input_hint,
           ),
         ),
-        GapRes.hGap16,
+        GapRes.vGap16,
         TextField(
           controller: pwdController,
           keyboardType: TextInputType.number,
@@ -184,25 +184,16 @@ class LoginPageBodyState extends State<LoginPageBody> {
 
   void _userClearOnPressed() {
     userController.clear();
-    setState(() {
-      userClearVisible = false;
-    });
-  }
-
-  void _userOnChange(txt) {
-    setState(() {
-      userClearVisible = txt != null && txt.isNotEmpty;
-    });
   }
 
   void _loginOnPressed() {
     if (_validate()) {
-      HttpUtils.post<LoginUserVo>(
+      HttpUtils.post<LoginUserEntity>(
           "user/login",
           (HttpResult httpResult) {
             if (httpResult.isSuccess() && httpResult.isNotEmpty()) {
 //              LoginUserVo loginUserVo = LoginUserVo.fromJson(httpResult.data);
-              LoginUserVo loginUserVo = httpResult.data;
+              LoginUserEntity loginUserVo = httpResult.data;
 
               AccountData.saveLoginInfo(loginUserVo.username).then((r) {
                 Navigator.of(context)

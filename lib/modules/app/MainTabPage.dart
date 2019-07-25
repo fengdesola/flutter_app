@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/common/res/TextStyleRes.dart';
+import 'package:flutter_app/modules/app/FindPage.dart';
 import 'package:flutter_app/modules/app/HomePage.dart';
 
 class MainTabPage extends StatefulWidget {
@@ -11,9 +12,9 @@ class MainTabPage extends StatefulWidget {
 
 class MainTabState extends State<MainTabPage> {
   //默认索引
-  int positionIndex = 0;
+  int positionIndex = 1;
   //底部导航栏
-  var mainTitles = ['首页', '发现', '其他', '我的'];
+  var mainTitles = ['首页', '发现', '我的'];
   IndexedStack indexStack;
   List<BottomNavigationBarItem> navigationViews;
   final GlobalKey navigatorKey = GlobalKey<NavigatorState>();
@@ -47,6 +48,7 @@ class MainTabState extends State<MainTabPage> {
       index: positionIndex,
       children: <Widget>[
         HomePage(),
+        FindPage(),
       ],
     );
   }
