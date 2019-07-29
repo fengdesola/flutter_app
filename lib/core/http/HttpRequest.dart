@@ -145,6 +145,7 @@ class HttpRequest {
 
   static void handError(Function errorCallback, HttpResult error) {
     ToastUtil.toast(error.msg);
+
     if (errorCallback != null) {
       errorCallback(error);
     }

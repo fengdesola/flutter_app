@@ -16,6 +16,7 @@ class BannerView extends StatefulWidget {
   }
 
   onRefresh() {
+    //todo 第二次刷新时，会noSuchMethod
     _state.onRefresh();
   }
 }
@@ -23,6 +24,7 @@ class BannerView extends StatefulWidget {
 class BannerViewState extends CoreState<BannerView> {
   //轮播图
   List<BannerEntity> bannerData;
+  final double HIGH = 160;
 
   @override
   Widget build(BuildContext context) {
@@ -70,8 +72,8 @@ class BannerViewState extends CoreState<BannerView> {
       scrollDirection: Axis.horizontal, //滚动方向
       loop: true,
       autoplay: true,
-      itemHeight: 250,
-      containerHeight: 250,
+      itemHeight: HIGH,
+      containerHeight: HIGH,
       itemCount: ObjectUtil.intF(bannerData?.length),
       index: 0,
       pagination: new SwiperPagination(),
@@ -88,7 +90,7 @@ class BannerViewState extends CoreState<BannerView> {
     );
     Container container = Container(
       child: swiper,
-      height: 250,
+      height: HIGH,
     );
 
     return container;

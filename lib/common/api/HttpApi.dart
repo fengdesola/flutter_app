@@ -15,6 +15,7 @@ class HttpApi {
   static const String UN_COLLECT_LIST = "lg/uncollect/";
   //登录
   static const String LOGIN = "user/login";
+  static const String LOGOUT = "user/logout/json";
   //注册
   static const String REGISTER = "user/register";
   //知识体系

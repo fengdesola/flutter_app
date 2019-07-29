@@ -12,7 +12,7 @@ class AccountData {
   }
 
   //清除用户登陆的信息
-  static Future clearLoginInfo() async {
+  static Future<bool> clearLoginInfo() async {
     SharedPreferences sp = await SharedPreferences.getInstance();
     return sp.clear();
   }

@@ -9,9 +9,11 @@ import 'package:flutter_app/common/res/TextStyleRes.dart';
 import 'package:flutter_app/core/base/CoreWebPage.dart';
 import 'package:flutter_app/core/http/HttpResult.dart';
 import 'package:flutter_app/core/http/HttpUtils.dart';
+import 'package:flutter_app/core/utils/AppNavigator.dart';
 import 'package:flutter_app/core/utils/ObjectUtil.dart';
 import 'package:flutter_app/core/utils/StringUtil.dart';
 import 'package:flutter_app/core/utils/ToastUtil.dart';
+import 'package:flutter_app/modules/account/LoginPage.dart';
 
 /**
  * 文章 item view
@@ -21,11 +23,11 @@ class ArticleItemView extends StatefulWidget {
   ArticleItemView(this.itemVo);
   @override
   State<StatefulWidget> createState() {
-    return ArticleIntemState();
+    return ArticleItemState();
   }
 }
 
-class ArticleIntemState extends State<ArticleItemView> {
+class ArticleItemState extends State<ArticleItemView> {
   @override
   Widget build(BuildContext context) {
     var itemVo = widget.itemVo;
@@ -125,9 +127,21 @@ class ArticleIntemState extends State<ArticleItemView> {
               itemVo.collect = !ObjectUtil.boolF(itemVo.collect);
             });
           }
+        }, errorCallback: (HttpResult httpResult) {
+          if (httpResult.code == -1001) {
+            toLoginPage(itemVo);
+          }
         });
       } else {
-        //todo login
+        toLoginPage(itemVo);
+      }
+    });
+  }
+
+  void toLoginPage(ArticleVoEntity itemVo) {
+    AppNavigator.pushResult(context, LoginPage(), (result) {
+      if (result is bool && ObjectUtil.boolF(result)) {
+        _collectOnPressed(itemVo);
       }
     });
   }

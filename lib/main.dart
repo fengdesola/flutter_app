@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/core/CoreConstant.dart';
 
 import 'core/http/http.dart';
-import 'modules/account/LoginPage.dart';
+import 'modules/app/MainTabPage.dart';
 
 void main() {
   CoreConstant.init(true, "https://www.wanandroid.com/");
@@ -18,16 +18,17 @@ void main() {
 /// This Widget is the main application widget.
 class MyApp extends StatelessWidget {
   static const String _title = 'Flutter Code Sample';
-
+  final GlobalKey navigatorKey = GlobalKey<NavigatorState>();
   @override
   Widget build(BuildContext context) {
     CoreConstant.init(true, "https://www.wanandroid.com/");
     return MaterialApp(
+      navigatorKey: navigatorKey,
       title: _title,
-      theme: new ThemeData(
-        primaryColor: Colors.white,
-      ),
-      home: LoginPage(),
+//      theme: new ThemeData(
+//        primaryColor: Colors.white,
+//      ),
+      home: MainTabPage(),
       //debug模式下是否显示材质网格
 //      debugShowMaterialGrid: CoreConstant.debug,
       //当为true时应用程序顶部覆盖一层GPU和UI曲线图，可即时查看当前流畅度情况
