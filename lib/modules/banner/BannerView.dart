@@ -11,12 +11,15 @@ class BannerView extends StatefulWidget {
   BannerViewState _state;
   @override
   State<StatefulWidget> createState() {
+    //列表下拉刷新时，不会触发
+//    print("xxxxxxxxxxxxx");
     _state = BannerViewState();
     return _state;
   }
 
   onRefresh() {
     //todo 第二次刷新时，会noSuchMethod
+    //不应这么做
     _state.onRefresh();
   }
 }

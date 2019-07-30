@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 
 class AppNavigator {
-  static push(BuildContext context, Widget scene) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (BuildContext context) => scene,
-      ),
-    );
+  static push(BuildContext context, Widget scene, {Function(Object) function}) {
+    if (function != null) {
+      pushResult(context, scene, function);
+    } else {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (BuildContext context) => scene,
+        ),
+      );
+    }
   }
 
   static pushAndRemoveUntil(BuildContext context, Widget scene) {

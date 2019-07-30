@@ -10,8 +10,9 @@ import 'package:flutter_app/modules/article/ArticleItemView.dart';
 
 class ArticleListView extends StatefulWidget {
   ItemVoEntity itemVoEntity;
+  bool isCollection = false;
 
-  ArticleListView(this.itemVoEntity);
+  ArticleListView({this.itemVoEntity, this.isCollection});
 
   @override
   State<StatefulWidget> createState() {
@@ -43,7 +44,8 @@ class ArticleListViewState extends CoreListState<ArticleListView> {
 
   void _getData() {
     showLoadingView();
-    String url = HttpApi.ARTICLE_LIST;
+    String url =
+        widget.isCollection ? HttpApi.COLLECT_LIST : HttpApi.ARTICLE_LIST;
     url += "$pageNo/json";
 
     HttpUtils.get(url, (HttpResult httpResult) {
@@ -57,7 +59,10 @@ class ArticleListViewState extends CoreListState<ArticleListView> {
       }
     }, errorCallback: (HttpResult httpResult) {
       showErrorView();
-    }, params: {"cid": widget.itemVoEntity?.id?.toString()});
+    },
+        params: widget.itemVoEntity == null
+            ? null
+            : {"cid": widget.itemVoEntity?.id?.toString()});
   }
 
   @override

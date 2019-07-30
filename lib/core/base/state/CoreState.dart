@@ -27,7 +27,7 @@ abstract class CoreState<T extends StatefulWidget> extends State<T> {
         _widget = Center(
           child: InkWell(
             child: Text(
-              "error",
+              "error, try again",
             ),
             onTap: onRefresh,
           ),

@@ -51,7 +51,7 @@ class ItemTabState extends CoreState<ItemTabPage>
           body: TabBarView(
             controller: tabController,
             children: widget.itemVoEntity.children.map((ItemVoEntity item) {
-              return ArticleListView(item);
+              return ArticleListView(itemVoEntity: item);
             }).toList(),
           ),
         ),

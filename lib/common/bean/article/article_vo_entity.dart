@@ -1,4 +1,5 @@
 import 'package:flutter_app/core/base/CoreVo.dart';
+import 'package:flutter_app/core/utils/ObjectUtil.dart';
 import 'package:flutter_app/core/utils/StringUtil.dart';
 
 class ArticleVoEntity extends CoreVo {
@@ -79,8 +80,8 @@ class ArticleVoEntity extends CoreVo {
     chapterId = json['chapterId'];
     superChapterId = json['superChapterId'];
     id = json['id'];
-    fresh = json['fresh'];
-    collect = json['collect'];
+    fresh = ObjectUtil.boolF(json['fresh']);
+    collect = json['collect'] ?? true;
     courseId = json['courseId'];
     desc = json['desc'];
   }

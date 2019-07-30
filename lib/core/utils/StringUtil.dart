@@ -1,10 +1,10 @@
 class StringUtil {
   static bool isEmpty(String str) {
-    return str?.isEmpty;
+    return str == null && str.isEmpty;
   }
 
   static bool isNotEmpty(String str) {
-    return str?.isNotEmpty;
+    return str != null && str.isNotEmpty;
   }
 
   static bool equals(String str1, String str2) {

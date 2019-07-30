@@ -22,6 +22,23 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     CoreConstant.init(true, "https://www.wanandroid.com/");
+
+    print(''' 
+    
+     へ　　　　　／|
+　　/＼7　　　 ∠＿/
+　 /　│　　 ／　／
+　│　Z ＿,＜　／　　 /`ヽ
+　│　　　　　ヽ　　 /　　〉
+　 Y　　　　　`　   /　　/
+　ｲ●　､　●　　⊂⊃〈　　/
+　()　 へ　　　　|　＼〈
+　　>ｰ ､_　 ィ　 │ ／／
+　 / へ　　 /　ﾉ＜| ＼＼
+　 ヽ_ﾉ　　(_／　 │／／
+　　7　　　　　　　|／
+　　＞―r￣￣`ｰ―＿    ''');
+
     return MaterialApp(
       navigatorKey: navigatorKey,
       title: _title,

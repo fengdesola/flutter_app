@@ -85,12 +85,13 @@ class HomePageState extends CoreListState<HomePage> {
 
   @override
   Widget buildHeaderWidget() {
+//    print("xxxxxxxxxxxxxhhhhhh");
     _bannerView = BannerView();
     return _bannerView;
   }
 
   @override
   onPullRefresh() {
-    _bannerView.onRefresh();
+//    _bannerView.onRefresh();
   }
 }

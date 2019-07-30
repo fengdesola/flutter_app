@@ -7,4 +7,6 @@ class StringRes {
   static String home = "首页";
 
   static String author = " 作者: ";
+
+  static String my_collection = " 我的收藏";
 }
