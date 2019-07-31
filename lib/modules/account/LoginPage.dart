@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/common/bean/account/login_user_entity.dart';
 import 'package:flutter_app/common/cache/AccountData.dart';
+import 'package:flutter_app/common/event/LoginEvent.dart';
 import 'package:flutter_app/common/res/ColorRes.dart';
 import 'package:flutter_app/common/res/GapRes.dart';
 import 'package:flutter_app/common/res/StringRes.dart';
 import 'package:flutter_app/common/res/TextStyleRes.dart';
+import 'package:flutter_app/core/eventbus/EventBus.dart';
 import 'package:flutter_app/core/http/HttpResult.dart';
 import 'package:flutter_app/core/http/HttpUtils.dart';
 import 'package:flutter_app/core/utils/ToastUtil.dart';
@@ -215,6 +217,7 @@ class LoginPageBodyState extends State<LoginPageBody> {
 //                    .push(MaterialPageRoute(builder: (context) {
 //                  return MainTabPage();
 //                }));
+                eventBus.fire(LoginEvent());
                 Navigator.of(context).pop(true);
               });
             }

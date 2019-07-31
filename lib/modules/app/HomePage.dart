@@ -92,8 +92,8 @@ class HomePageState extends CoreListState<HomePage> {
   @override
   onPullRefresh() {
     ///2种方法调用其他widget里state的方法
-    ///1，通过eventBus发送事件
-    ///2，通过维护GlobalKey来调用key.currentState直接调用该state里的方法
+    ///1，通过eventBus发送事件（可以跨widget）
+    ///2，通过维护GlobalKey来调用key.currentState直接调用该state里的方法（父widget调用子widget）
 //    eventBus.fire(BannerRefreshEvent());
     _bannerKey.currentState.onRefresh();
   }

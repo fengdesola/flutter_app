@@ -1,6 +1,6 @@
 class StringUtil {
   static bool isEmpty(String str) {
-    return str == null && str.isEmpty;
+    return str == null || str.isEmpty;
   }
 
   static bool isNotEmpty(String str) {

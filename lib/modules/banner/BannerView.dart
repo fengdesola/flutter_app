@@ -13,7 +13,7 @@ import 'package:flutter_swiper/flutter_swiper.dart';
 
 class BannerView extends StatefulWidget {
   BannerView({
-    GlobalKey key,
+    Key key,
   }) : super(key: key);
 
   @override
@@ -49,8 +49,8 @@ class BannerViewState extends CoreState<BannerView> {
 
   @override
   void dispose() {
-    super.dispose();
     _subscription?.cancel();
+    super.dispose();
   }
 
   @override
