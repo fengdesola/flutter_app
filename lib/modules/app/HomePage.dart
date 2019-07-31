@@ -16,7 +16,8 @@ class HomePage extends StatefulWidget {
 }
 
 class HomePageState extends CoreListState<HomePage> {
-  BannerView _bannerView;
+  GlobalKey<BannerViewState> _bannerKey = GlobalKey<BannerViewState>();
+
   @override
   void initState() {
     super.initState();
@@ -85,13 +86,15 @@ class HomePageState extends CoreListState<HomePage> {
 
   @override
   Widget buildHeaderWidget() {
-//    print("xxxxxxxxxxxxxhhhhhh");
-    _bannerView = BannerView();
-    return _bannerView;
+    return BannerView(key: _bannerKey);
   }
 
   @override
   onPullRefresh() {
-//    _bannerView.onRefresh();
+    ///2种方法调用其他widget里state的方法
+    ///1，通过eventBus发送事件
+    ///2，通过维护GlobalKey来调用key.currentState直接调用该state里的方法
+//    eventBus.fire(BannerRefreshEvent());
+    _bannerKey.currentState.onRefresh();
   }
 }

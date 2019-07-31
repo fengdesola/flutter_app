@@ -1,26 +1,24 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_app/common/api/HttpApi.dart';
 import 'package:flutter_app/common/bean/banner/banner_entity.dart';
+import 'package:flutter_app/common/event/BannerRefreshEvent.dart';
 import 'package:flutter_app/core/base/state/CoreState.dart';
+import 'package:flutter_app/core/eventbus/EventBus.dart';
 import 'package:flutter_app/core/http/HttpResult.dart';
 import 'package:flutter_app/core/http/HttpUtils.dart';
 import 'package:flutter_app/core/utils/ObjectUtil.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 
 class BannerView extends StatefulWidget {
-  BannerViewState _state;
+  BannerView({
+    GlobalKey key,
+  }) : super(key: key);
+
   @override
   State<StatefulWidget> createState() {
-    //列表下拉刷新时，不会触发
-//    print("xxxxxxxxxxxxx");
-    _state = BannerViewState();
-    return _state;
-  }
-
-  onRefresh() {
-    //todo 第二次刷新时，会noSuchMethod
-    //不应这么做
-    _state.onRefresh();
+    return BannerViewState();
   }
 }
 
@@ -28,7 +26,7 @@ class BannerViewState extends CoreState<BannerView> {
   //轮播图
   List<BannerEntity> bannerData;
   final double HIGH = 160;
-
+  StreamSubscription _subscription;
   @override
   Widget build(BuildContext context) {
     Widget widget = super.build(context);
@@ -44,6 +42,15 @@ class BannerViewState extends CoreState<BannerView> {
   void initState() {
     super.initState();
     _getBanner();
+    _subscription = eventBus.on<BannerRefreshEvent>().listen((event) {
+      _getBanner();
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _subscription?.cancel();
   }
 
   @override
