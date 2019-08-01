@@ -18,6 +18,7 @@ class ItemTabPage extends StatefulWidget {
 class ItemTabState extends CoreState<ItemTabPage>
     with SingleTickerProviderStateMixin {
   TabController tabController;
+  List<Tab> _tabList;
 
   @override
   void initState() {
@@ -26,6 +27,8 @@ class ItemTabState extends CoreState<ItemTabPage>
     //创建TabController对象
     tabController = new TabController(
         length: widget.itemVoEntity?.children?.length, vsync: this);
+
+    _tabList = _initTabs(widget.itemVoEntity);
   }
 
   @override
@@ -38,7 +41,7 @@ class ItemTabState extends CoreState<ItemTabPage>
         length: widget.itemVoEntity?.children?.length,
         child: Scaffold(
           appBar: TabBar(
-            tabs: _initTabs(widget.itemVoEntity),
+            tabs: _tabList,
             controller: tabController,
             isScrollable: true,
 //            indicatorColor: ColorRes.text_main,
@@ -59,7 +62,7 @@ class ItemTabState extends CoreState<ItemTabPage>
     );
   }
 
-  _initTabs(ItemVoEntity itemVoEntity) {
+  List<Tab> _initTabs(ItemVoEntity itemVoEntity) {
     return itemVoEntity?.children?.map((ItemVoEntity item) {
       return Tab(
         text: item.name,

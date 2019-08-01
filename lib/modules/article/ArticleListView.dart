@@ -10,9 +10,14 @@ import 'package:flutter_app/modules/article/ArticleItemView.dart';
 
 class ArticleListView extends StatefulWidget {
   ItemVoEntity itemVoEntity;
-  bool isCollection = false;
+  bool isCollection;
+  Key key;
 
-  ArticleListView({this.itemVoEntity, this.isCollection});
+  ArticleListView({this.itemVoEntity, this.isCollection = false}) {
+    if (itemVoEntity != null) {
+      key = PageStorageKey<String>(itemVoEntity.name);
+    }
+  }
 
   @override
   State<StatefulWidget> createState() {
@@ -20,7 +25,21 @@ class ArticleListView extends StatefulWidget {
   }
 }
 
-class ArticleListViewState extends CoreListState<ArticleListView> {
+class ArticleListViewState extends CoreListState<ArticleListView>
+    with AutomaticKeepAliveClientMixin {
+  @override
+
+  ///with AutomaticKeepAliveClientMixin 实现widget在不显示之后也不会被销毁仍然保存在内存中，所以慎重使用这个方法
+  ///配合DefaultTabController的TabBarView，实现切换后再切回来，不刷新页面效果
+  ///但是AutomaticKeepAliveClientMixin 必须调用 build方法，而且with里的方法会覆盖extends里的同名方法
+  bool get wantKeepAlive => true;
+
+  @override
+  Widget build(BuildContext context) {
+    super.build(context);
+    return buildSelfList(context);
+  }
+
   @override
   void initState() {
     super.initState();
@@ -34,7 +53,7 @@ class ArticleListViewState extends CoreListState<ArticleListView> {
 
   @override
   Widget buildListView() {
-    return buildSimpleListView();
+    return buildSimpleListView(key: widget.key);
   }
 
   @override

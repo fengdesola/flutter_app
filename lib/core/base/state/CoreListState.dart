@@ -45,7 +45,11 @@ abstract class CoreListState<T extends StatefulWidget> extends CoreState<T> {
 
   @override
   Widget build(BuildContext context) {
-    Widget widget = super.build(context);
+    return buildSelfList(context);
+  }
+
+  Widget buildSelfList(BuildContext context) {
+    Widget widget = buildSelf(context);
     if (widget == null) {
       return buildListView();
     } else {
@@ -114,8 +118,9 @@ abstract class CoreListState<T extends StatefulWidget> extends CoreState<T> {
   ///创建整个listview，通用的可以返回[buildSimpleListView]
   Widget buildListView();
 
-  Widget buildSimpleListView() {
+  Widget buildSimpleListView({Key key}) {
     Widget listView = ListView.builder(
+      key: key,
       itemBuilder: (BuildContext context, int index) {
         return _buildListItem(index);
       },
@@ -145,6 +150,7 @@ abstract class CoreListState<T extends StatefulWidget> extends CoreState<T> {
 
   Widget _buildListItem(int index) {
     if (_hasHeader && index == 0) {
+      //header
       return buildHeaderWidget();
     } else if (_hasHeader) {
       //去掉头部占用的位置

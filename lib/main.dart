@@ -39,6 +39,9 @@ class MyApp extends StatelessWidget {
 　　7　　　　　　　|／
 　　＞―r￣￣`ｰ―＿    ''');
 
+    C c = C();
+    c.test();
+
     return MaterialApp(
       navigatorKey: navigatorKey,
       title: _title,
@@ -215,4 +218,22 @@ class Test {
   Test.newInt(int a) : assert(a > 0) {}
 
   void test() {}
+}
+
+class A {
+  run() {
+    print("===============run a");
+  }
+}
+
+class B {
+  run() {
+    print("==================run B");
+  }
+}
+
+class C extends A with B {
+  test() {
+    run();
+  }
 }

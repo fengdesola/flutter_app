@@ -87,6 +87,7 @@ class HomePageState extends CoreListState<HomePage> {
   @override
   Widget buildHeaderWidget() {
     return BannerView(key: _bannerKey);
+    ;
   }
 
   @override

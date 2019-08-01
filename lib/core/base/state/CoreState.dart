@@ -16,6 +16,10 @@ abstract class CoreState<T extends StatefulWidget> extends State<T> {
 
   @override
   Widget build(BuildContext context) {
+    return buildSelf(context);
+  }
+
+  Widget buildSelf(BuildContext context) {
     Widget _widget;
     switch (status) {
       case Status.empty:
