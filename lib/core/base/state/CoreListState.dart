@@ -79,21 +79,24 @@ abstract class CoreListState<T extends StatefulWidget> extends CoreState<T> {
 
   /// [isMore] true添加，false重置
   void _addData(List list, bool isMore) {
-    setState(() {
-      List listTemp = new List();
+    if (mounted) {
+      setState(() {
+        List listTemp = new List();
 
-      if (isMore && _listData != null && _listData.isNotEmpty) {
-        listTemp.addAll(_listData);
-      }
-      if (list != null && list.isNotEmpty) {
-        listTemp.addAll(list);
-      }
-      _listData = listTemp;
+        if (isMore && _listData != null && _listData.isNotEmpty) {
+          listTemp.addAll(_listData);
+        }
+        if (list != null && list.isNotEmpty) {
+          listTemp.addAll(list);
+        }
+        _listData = listTemp;
 
-      if (_loadMoreEnable) {
-        _hasMoreData = (list != null && list.length == pageSize) ? true : false;
-      }
-    });
+        if (_loadMoreEnable) {
+          _hasMoreData =
+              (list != null && list.length == pageSize) ? true : false;
+        }
+      });
+    }
   }
 
   void _addListener() {
